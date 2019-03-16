@@ -39,6 +39,7 @@ void print(int puzzle[N][N]){
 				cout << ".";
 			else 
 				cout << puzzle[y][x];
+			cout << " ";
 		}
 		cout << endl;
 	}
