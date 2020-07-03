@@ -1,7 +1,11 @@
-make: binarysolver
+TARGET = binary
 
-binarysolver: BinarySolver.cpp
-	g++ -o BinarySolver BinarySolver.cpp
+all: $(TARGET)
 
-clean: 
-	rm BinarySolver
+$(TARGET) : % : %.cpp
+	$(CXX) -o $@ $^
+
+clean:
+	rm -f $(TARGET)
+
+.PHONY: all clean

@@ -4,9 +4,8 @@
 using namespace std;
 
 #define EMPTY 2
-const int N = 14;
 
-int puzzle_06x06[6][6] = {
+int puzzle[6][6] = {
 	{1, 2, 2, 1, 2, 2},
 	{2, 2, 2, 1, 2, 0},
 	{2, 2, 2, 2, 2, 2},
@@ -15,46 +14,14 @@ int puzzle_06x06[6][6] = {
 	{2, 2, 1, 2, 1, 2}
 };
 
-int puzzle_1_14x14[14][14] = {
-	{2, 2, 2, 2, 1, 1, 2, 2, 1, 2, 2, 0, 2, 2},
-	{1, 2, 1, 2, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2},
-	{1, 2, 1, 2, 0, 2, 2, 2, 1, 2, 1, 2, 2, 1},
-	{2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2},
-	{2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 0, 0, 2},
-	{2, 0, 2, 2, 2, 2, 1, 2, 2, 1, 2, 2, 2, 0},
-	{2, 0, 0, 2, 2, 0, 0, 2, 2, 1, 2, 2, 1, 2},
-	{2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2},
-	{2, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1},
-	{2, 2, 2, 0, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2},
-	{2, 1, 2, 2, 2, 2, 0, 2, 0, 2, 2, 2, 2, 2},
-	{2, 2, 2, 2, 0, 2, 2, 2, 2, 1, 2, 2, 0, 2},
-	{1, 1, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2},
-	{2, 1, 2, 2, 0, 2, 2, 1, 2, 1, 2, 2, 2, 1}	
-};
-
-int puzzle_2_14x14[14][14] = {
-	{0, 2, 2, 2, 2, 2, 1, 2, 0, 2, 2, 2, 0, 2},
-	{2, 2, 2, 1, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2},
-	{2, 2, 0, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2},
-	{2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 0},
-	{2, 1, 1, 2, 2, 2, 2, 2, 0, 2, 0, 2, 2, 0},
-	{2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 0, 2},
-	{2, 2, 0, 2, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2},
-	{1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 1, 2},
-	{2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2},
-	{2, 2, 2, 2, 0, 2, 1, 2, 1, 1, 2, 2, 0, 2},
-	{2, 2, 2, 2, 2, 2, 1, 2, 2, 1, 2, 2, 0, 0},
-	{2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2},
-	{2, 1, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 2},
-	{2, 2, 2, 2, 2, 1, 2, 2, 2, 0, 0, 2, 2, 1}	
-};
+#define N (sizeof puzzle[0] / sizeof puzzle[0][0])
 
 void print(int puzzle[N][N]){
 	for(int y = 0; y < N; y++){
 		for(int x = 0; x < N; x++){
 			if(puzzle[y][x] == EMPTY)
 				cout << ".";
-			else 
+			else
 				cout << puzzle[y][x];
 			cout << " ";
 		}
@@ -85,7 +52,7 @@ bool check_rows(int puzzle[N][N]){
 	for(int y0 = 0; y0 < N; y0++)
 		for(int y1 = y0+1; y1 < N; y1++)
 			if(compare(puzzle[y0], puzzle[y1]))
-				return false; 	
+				return false;
 
 	for(int y = 0; y < N; y++){
 		int n2=-1, n1=-1, n0=-1;
@@ -93,7 +60,7 @@ bool check_rows(int puzzle[N][N]){
 		for(int x = 0; x < N; x++){
 			n2 = n1;
 			n1 = n0;
-			n0 = puzzle[y][x];	
+			n0 = puzzle[y][x];
 			if(n2 == n1 && n1 == n0)
 				return false;
 
@@ -101,7 +68,7 @@ bool check_rows(int puzzle[N][N]){
 				c0++;
 			else if(puzzle[y][x] == 1)
 				c1++;
-			else 
+			else
 				return false;
 		}
 		if(c0 != c1)
@@ -116,10 +83,10 @@ bool isSolution(int puzzle[N][N]){
 		transpose(puzzle);
 		if(check_rows(puzzle)){
 			transpose(puzzle);
-			return true;	
+			return true;
 		}
 		transpose(puzzle);
-	}	
+	}
 	return false;
 }
 
@@ -131,7 +98,7 @@ bool isValid(int puzzle[N][N]){
 		for(int x = 0; x < N; x++){
 			n2 = n1;
 			n1 = n0;
-			n0 = puzzle[y][x];	
+			n0 = puzzle[y][x];
 			if(n0 != EMPTY && n2 == n1 && n1 == n0)
 				return false;
 			if(puzzle[y][x] == 0)
@@ -149,7 +116,7 @@ bool isValid(int puzzle[N][N]){
 		for(int y = 0; y < N; y++){
 			n2 = n1;
 			n1 = n0;
-			n0 = puzzle[y][x];	
+			n0 = puzzle[y][x];
 			if(n0 != EMPTY && n2 == n1 && n1 == n0)
 				return false;
 			if(puzzle[y][x] == 0)
@@ -174,7 +141,7 @@ void update_xy(int &x, int &y){
 }
 
 void solve(int puzzle[N][N], int x, int y){
-	
+
 	if(y == N){
 		if(isSolution(puzzle))
 			print(puzzle);
@@ -205,8 +172,8 @@ void solve(int puzzle[N][N], int x, int y){
 }
 
 int main(){
-	print(puzzle_2_14x14);
-	solve(puzzle_2_14x14, 0, 0);
+	print(puzzle);
+	solve(puzzle, 0, 0);
 
 	return 0;
 }
